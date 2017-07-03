@@ -1,0 +1,23 @@
+<div class="navbar">
+  <div class="navbar-inner">
+    <% if(config.leftIcon){ %>
+    <div class="left">
+      <a class="back link">
+        <i class="icon material-icons"><%= config.leftIcon %></i>
+      </a>
+    </div>
+    <% } %>
+    <div class="center"><%= config.title %></div>
+    <div class="right">
+    <% if (config.rightIcon) { -%>
+      <a class="link">
+        <i class="icon material-icons"><%= config.rightIcon %></i>
+      </a>
+    <% } else { -%>
+      <a data-panel="left" class="link open-panel">
+        <i class="icon material-icons">menu</i>
+      </a>
+    <% } -%>
+    </div>
+  </div>
+</div>

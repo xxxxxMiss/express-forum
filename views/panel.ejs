@@ -1,0 +1,107 @@
+<div class="panel-overlay"></div>
+<div class="panel panel-left panel-cover">
+  <div class="view navbar-fixed">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="center">个人中心</div>
+        <div class="right">
+          <a href="/topics" class="link">首页</a>
+        </div>
+      </div>
+    </div>
+    <div class="pages">
+      <div data-page="panel-left" class="page">
+        <div class="page-content">
+          <div class="content-block">
+            <a href="<% if (user) { %>/user/<%= user._id %><% } else { %>/signin<% } %>" class="card sign-card">
+              <div class="card-header no-border">
+                <div class="ks-avatar">
+                 <% if (user && user.avatar) { -%>
+                   <img src="/upload/<%= user.avatar %>">
+                 <% } else { -%>
+                  <img src="/images/moren.png" width="40">
+                 <% } -%>
+                </div>
+                <% if (user) { -%>
+                  <div class="ks-name"><%= user.name %></div>
+                  <% if(user.position){ %>
+                    <div class="ks-desc"><%= user.position %></div>
+                  <% } else { %>
+                    <div class="ks-desc">添加职位 @ 公司</div>
+                  <% } %>
+                <% } else { -%>
+                  <div class="ks-desc pt-10">
+                    登录/注册
+                  </div>
+                <% } -%>
+              </div>
+            </a>
+            <div class="list-block">
+              <ul>
+                <li>
+                  <a href="/user/<% if(user){ %><%= user._id %><% } %>/topics" class="item-link item-content">
+                    <div class="item-media">
+                      <i class="icon material-icons">insert_drive_file</i>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-title">我的发表</div>
+                      <div class="item-after">
+                        <% if (user && user.topicsCount) { -%>
+                          <span class="badge"><%= user.topicsCount %>个</span>
+                        <% } -%>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="item-link item-content">
+                    <div class="item-media">
+                      <i class="icon material-icons">star</i>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-title">我的收藏</div>
+                      <div class="item-after">
+                        <% if (user && user.collections) { -%>
+                          <span class="badge"><%= user.collections.length%>个</span>
+                        <% } -%>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="list-block">
+              <ul>
+                <li>
+                  <a class="item-link item-content">
+                    <div class="item-media">
+                      <i class="icon material-icons">warning</i>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-title">意见反馈</div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <div class="item-content" id="J_changeSkin">
+                    <div class="item-media">
+                      <i class="icon material-icons">brightness_3</i>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-title">夜间模式</div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <% if (user) { -%>
+              <div class="content-block">
+                <a href="/signout">退出登录</a>
+              </div>
+            <% } -%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

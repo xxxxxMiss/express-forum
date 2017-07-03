@@ -1,0 +1,7 @@
+# you can add comments in yaml file, so using yaml instead of json
+port: 3000
+session:
+  secret: qschforum
+  key: qschforum
+  maxAage: 2592000000
+mongodb: mongodb://127.0.0.1:27017/forum

@@ -1,0 +1,17 @@
+<%- include('header') %>
+<%- include('components/navbar', { config: { title: '首页' } }) %>
+<div data-page="topics" class="page">
+  <div class="page-content infinite-scroll">
+    <div class="list-block">
+      <ul>
+      <% if (topics) { -%>
+        <% topics.forEach(topic => { %>
+          <%- include('components/list-item', { topic }) %>
+        <% }) %>
+      <% } %>
+      </ul>
+    </div>
+  </div>
+  <%- include('components/quickly-enter') %>
+</div>
+<%- include('footer') %>

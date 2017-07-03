@@ -1,0 +1,39 @@
+<%- include('header') %>
+<%- include('components/navbar', { config: { title: '详情' } }) %>
+<div data-page="topic" class="page">
+  <div class="page-content">
+    <div class="content-block topic-title"><%= topic.title %></div>
+    <div class="card topic-item">
+      <div class="card-header">
+        <img src="/upload/<%= topic.author.avatar %>" class="avatar">
+        <span><%= topic.author.name %></span>
+      </div>
+      <div class="card-content">
+        <div class="card-content-inner">
+          <%- topic.content %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toolbar toolbar-bottom topic-toolbar">
+    <div class="toolbar-inner">
+      <form class="ups" method="post" action="/topics/<%= topic._id %>/ups">
+        <div class="chip">
+          <div class="chip-media">
+            <i class="icon material-icons">file_upload</i>
+          </div>
+          <button class="chip-label">0</button>
+        </div>
+      </form>
+      <form class="collect" method="post" action="/topics/<%= topic._id %>/collect">
+        <div><i class="icon material-icons">star</i></div>
+        <button>收藏</button>
+      </form>
+      <a href="/topics/<%= topic._id %>/comments">
+        <div><i class="icon material-icons">mode_comment</i></div>
+        <span><% if (commentsCount) { -%> <%= commentsCount %> <% } else { -%> 评论 <% } -%></span>
+      </a>
+    </div>
+  </div>
+</div>
+<%- include('footer') %>

@@ -1,0 +1,15 @@
+<%- include('header') %>
+<%- include('components/navbar', { config: { title: '我的发表' }}) %>
+<div data-page="my-topics" class="page">
+  <div class="page-content">
+    <%- include('components/notification') %>
+    <div class="list-block">
+      <ul>
+        <% topics.forEach(topic => { %>
+          <%- include('components/list-item', { topic }) %>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+</div>
+<%- include('footer') %>

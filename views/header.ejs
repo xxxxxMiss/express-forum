@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="description" content="<%= cfg.description %>">
+  <title><%= cfg.title %></title>
+  <link rel="stylesheet" href="/3rd/f7/css/framework7.material.colors.css">
+  <link rel="stylesheet" href="/3rd/f7/css/framework7.material.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+  <script src="/3rd/f7/js/framework7.js"></script>
+</head>
+<body>
+  <%- include('panel') %>
+  <script>
+    // toggle app's skin
+    ;(function (body) {
+      var changeSkin = document.getElementById('J_changeSkin')
+      var skin = localStorage.getItem('app_skin')
+      skin && body.classList.toggle(skin)
+
+      changeSkin.addEventListener('click', function () {
+        if(body.classList.contains('layout-dark')){
+          body.classList.remove('layout-dark')
+          localStorage.removeItem('app_skin')
+        }else{
+          body.classList.add('layout-dark')
+          localStorage.setItem('app_skin', 'layout-dark')
+        }
+      })
+    })(document.body)
+  </script>
+  <div class="views">
+    <div class="view view-main">
+      <div class="pages navbar-fixed">

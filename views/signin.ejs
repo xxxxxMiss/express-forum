@@ -1,0 +1,66 @@
+<%- include('header') %>
+<%- include('components/navbar', { config: { title: '登录' } }) %>
+<div data-page="signin" class="page">
+  <div class="page-content">
+    <form class="list-block" method="post">
+      <%- include('components/notification') %>
+      <ul>
+        <li>
+          <div class="item-content">
+            <div class="item-media">
+              <i class="icon material-icons">person_outline</i>
+            </div>
+            <div class="item-inner">
+              <div class="item-title floating-label">用户名</div>
+              <div class="item-input">
+                <input type="text" name="name">
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="item-content">
+            <div class="item-media">
+              <i class="icon material-icons">lock_outline</i>
+            </div>
+            <div class="item-inner">
+              <div class="item-title floating-label">密码</div>
+              <div class="item-input">
+                <input type="password" name="password">
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="content-block">
+        <input type="submit" class="button button-fill" value="登录">
+      </div>
+      <div class="buttons-row">
+        <a class="button" href="/forgot-password">忘记密码？</a>
+        <a class="button" href="/signup">注册账号</a>
+      </div>
+      <div class="other-signin">
+        <div class="signin-divider">
+          <div class="divider-left"></div>
+          <div class="divider-text">其他账号登录</div>
+          <div class="divider-left"></div>
+        </div>
+        <ul>
+          <li>
+            <i class="icon icon-weibo"></i>
+            <div>微博</div>
+          </li>
+          <li>
+            <i class="icon icon-wechat"></i>
+            <div>微信</div>
+          </li>
+          <li>
+            <i class="icon icon-github"></i>
+            <div>Github</div>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+</div>
+<%- include('footer') %>

@@ -1,0 +1,34 @@
+<li>
+  <div class="topics-item">
+    <div class="card">
+      <div class="card-header">
+        <img src="<% if (topic && topic.author && topic.author.avatar) { -%>/upload/<%= topic.author.avatar %><% } else { -%>/images/moren.png<% } -%>" class="avatar">
+        <span><%= topic.author.name %></span>
+      </div>
+      <div class="topics-title">
+        <%= topic.title %>
+      </div>
+      <a href="/topics/<%= topic._id %>">
+        <div class="card-content">
+          <div class="card-content-inner">
+            <%- topic.content %>
+          </div>
+        </div>
+      </a>
+      <div class="card-footer">
+        <span>1赞同</span>
+        <span>19评论</span>
+        <span>22天前</span>
+      </div>
+      <!-- because of topic.author._id's type is object, we should convert it to string then compare them -->
+      <% if (user && String(user._id) === String(topic.author._id)) { -%>
+        <div class="buttons-row topics-buttons">
+          <form method="post" action="/user/<%= user._id %>/topics/<%= topic._id %>/del">
+            <button class="button color-blue ripple-pink">删除</button>
+          </form>
+          <a href="/ask/<%= topic._id %>/edit" class="button color-blue ripple-bule">编辑</a>
+        </div>
+      <% } -%>
+    </div>
+  </div>
+</li>
