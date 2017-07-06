@@ -6,7 +6,7 @@
       <ul>
       <% if (topics) { -%>
         <% topics.forEach(topic => { %>
-          <%- include('components/list-item', { topic }) %>
+          <%- include('components/list-item', { topic, page: 'topics' }) %>
         <% }) %>
       <% } %>
       </ul>

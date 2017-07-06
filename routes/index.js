@@ -5,11 +5,13 @@ module.exports = function(app){
 
   // only mounted middleware
   // validate authority on every router
-  app.use('/topics', require('./topics'))
-  app.use('/signup', require('./signup'))
-  app.use('/signout', require('./signout'))
-  app.use('/signin', require('./signin'))
-  // you can combine '/user' with '/ask'
-  app.use('/user', require('./user'))
-  app.use('/ask', require('./ask'))
+  app.use('/', require('./topics'))
+  app.use('/', require('./signup'))
+  app.use('/', require('./signout'))
+  app.use('/', require('./signin'))
+  // you can integrate '/user' with '/ask'
+  app.use('/', require('./user'))
+  app.use('/', require('./ask'))
 }
+
+

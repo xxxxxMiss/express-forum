@@ -3,29 +3,39 @@ const router = express.Router()
 const checkLogin = require('../middlewares/check').checkLogin
 const TopicModel = require('../models/topic')
 const CommentModel = require('../models/comment')
+const TopicCollectModel = require('../models/topic_collect')
+const UserModel = require('../models/user')
 
-router.get('/', (req, res) => {
+router.get('/topics', (req, res) => {
   TopicModel.getTopics().then(topics => {
     // caution: typeof topic._id === 'object' is true
     res.render('topics', { topics })
   })
 })
 
-router.get('/:topicId', (req, res) => {
+router.get('/topics/:topicId', (req, res) => {
   let { topicId } = req.params
+  let userId = req.session.user && req.session.user._id || null
 
   // enter a topic detail page,
-  // you must do three things at the same time
+  // you must do five things at the same time
   Promise.all([
     TopicModel.getTopics(topicId),
     TopicModel.incPv(topicId),
-    CommentModel.getCommentsCount(topicId)
+    CommentModel.getCommentsCount(topicId),
+    TopicModel.getUpsCount(topicId),
+    TopicCollectModel.getTopicCollectByUserId(userId, topicId)
   ]).then(result => {
-    res.render('topic', { topic: result[0][0], commentsCount: result[2] })
+    res.render('topic', { 
+      topic: result[0][0], 
+      commentsCount: result[2], 
+      upsCount: result[3],
+      isCollected: result[4] ? true : false
+    })
   })
 })
 
-router.get('/:topicId/comments', (req, res) => {
+router.get('/topics/:topicId/comments', (req, res) => {
   let { topicId } = req.params
 
   CommentModel.getCommentsByTopicId(topicId)
@@ -35,7 +45,7 @@ router.get('/:topicId/comments', (req, res) => {
 })
 
 // post a comment
-router.post('/:topicId/comments', checkLogin, (req, res) => {
+router.post('/topics/:topicId/comments', checkLogin, (req, res) => {
   let { topicId } = req.params
       ,{ content } = req.fields
       ,userId = req.session.user._id
@@ -45,7 +55,44 @@ router.post('/:topicId/comments', checkLogin, (req, res) => {
     // both `res.redirect` and `res.render` can realize rendering a page 
     // which method is suit here
     // TODO optimize CRUD
-    res.redirect(`${req.originalUrl}`)
+    res.redirect('back')
+  })
+})
+
+router.post('/topics/:topicId/ups', (req, res) => {
+  let { topicId } = req.params
+  let userId = req.session.user._id
+
+  TopicModel.updateUps(topicId, userId).then(commandRet => {
+    if(commandRet.ok && commandRet.n > 0){
+      res.redirect(`/topics/${topicId}`)
+    }
+  })
+})
+
+router.post('/topics/:topicId/collect', checkLogin, (req, res) => {
+  let { topicId } = req.params
+  let userId = req.session.user._id
+
+  TopicCollectModel.getTopicCollectByUserId(userId, topicId)
+  .then(tc => {
+    if(tc){
+      return TopicCollectModel.remove(userId, topicId)
+    }else{
+      let topicCollect = { user_id: userId, topic_id: topicId }
+      return TopicCollectModel.create(topicCollect)
+    }
+  }).then(ret => {
+    // TODO update user's collect count
+    if(ret.result && ret.result.ok && ret.result.n > 0){
+      return UserModel.updateUser(userId, 'collect_count', -1)
+    }
+    if(ret._id){
+      return UserModel.updateUser(userId, 'collect_count', 1)
+    }
+  }).then(user => {
+    req.session.user.collect_count = user.collect_count
+    res.redirect(`/topics/${topicId}`)
   })
 })
 

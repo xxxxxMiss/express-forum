@@ -1,31 +1,22 @@
 const Schema = require('mongoose').Schema
+const ObjectId = Schema.Types.ObjectId
 const UtilClass = require('./util')
 
 const topicShema = new Schema({
-  title: {
-    type: String
-  },
-  content: {
-    type: String
-  },
-  visit_cout: Number,
-  relay_count: Number,
-  ups: Number,
-  pv: Number,
+  title: { type: String },
+  content: { type: String },
+  visit_cout: { type: Number, default: 0 },
+  relay_count: { type: Number, default: 0 },
+  create_at: { type: Date, default: Date.now },
+  ups: [{ type: ObjectId }],
+  pv: { type: Number, default: 0 },
   last_reply_at: Date,
   tab: String,
-  // no requirement save it to database, 
-  // we can use middleware to transfer objectid to datetime 
-  // and deliver the result to frontend
-  // create_at: Date, 
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  is_collect: {
-    type: Boolean
-  }
+  author: { type: ObjectId, ref: 'User' },
+  is_collect: { type: Boolean, default: false }
 })
+
+topicShema.index({ create_at: -1 })
 
 topicShema.loadClass(UtilClass)
 

@@ -95,8 +95,14 @@ function getModalTemplate(){
   if(page == null) return
 
   // trigger automatically computed
-  var askContent = document.getElementById('J_askContent')
-    ,content = askContent.value
-  askContent.value = ''
-  askContent.value = content
-})(document.querySelector('div[data-page=ask]'))
+  
+  $('#J_btnTest').on('click', function(){
+
+    $.post('/test?time=' +  Date.now(), {
+      name: 'test',
+      age: 30
+    }, function(res){
+      console.log(res)
+    })
+  })
+})(document.querySelector('div[data-page=topic]'))

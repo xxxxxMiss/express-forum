@@ -1,4 +1,5 @@
 const Schema = require('mongoose').Schema
+const ObjectId = Schema.Types.ObjectId
 const UtilClass = require('./util')
 
 const userSma = new Schema({
@@ -9,14 +10,14 @@ const userSma = new Schema({
   password: {
     type: String
   },
+  create_at: { type: Date, default: Date.now },
   gender: String,
   position: String,
   company: String,
   profile: String,
   avatar: String,
-  collections: {
-    type: [ { type: Schema.Types.ObjectId, ref: 'Topic' }]
-  }
+  ask_count: { type: Number, default: 0 },
+  collect_count: { type: Number, default: 0 }
 })
 
 userSma.loadClass(UtilClass)

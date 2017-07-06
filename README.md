@@ -1,11 +1,47 @@
 ## 注册，登录
-## 发表话题
+## 提问
 ## 个人中心
-## 收藏话题
+## 收藏话题、删除收藏
 ## 添加评论
 ## 话题列表,详情
+## 为话题点赞消赞
+---
+## 邮箱注册
+## 第三方登录（github,weibo,weixin）
+## 发邮件
+## 支持markdown
+## 分享问题
+## 归类（属于提问类还是分享类）
+## 为评论点赞消赞
+## 支持at功能
+## 消息通知
+## 嵌入知乎日报功能
+
+---
+## rest api
+## 使用前端渲染（全部采用ajax）
+## 前端使用框架（Vue, React | Framework7, iview等)
+## 加入聊天功能（多人聊天室）
+## 语音功能（对于大段的文字，可以直接输入语音）
 
 
+
+你将：
+- [material icons](https://material.io/icons/)
+- [frmaework7 material design](http://material.framework7.cn/)
+- [mongoose](http://mongoosejs.com/docs/api.html)
+- [mongodb](https://docs.mongodb.com/manual/reference/operator/query/all/)
+- [express](http://www.expressjs.com.cn/4x/api.html)
+
+
+--- optimize
+- 部分请求使用ajax（不刷新页面，页面可以做得更加炫酷）
+
+
+---
+
+下一个node框架的使用
+egg | koa | sails 
 ## 影片
 | 字段 | 描述 |
 | -- | -- |

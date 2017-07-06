@@ -16,9 +16,13 @@ module.exports = {
 
     return Topic.find(query)
       .populate({ path: 'author', select: 'name avatar _id'})
+      .sort({ create_at: -1 })
       .then(topics => {
         topics = Array.isArray(topics) ? topics : [topics]
-        return topics.map(topic => topic.addCreateAt())
+        return topics.map(topic => {
+          topic.create_at = topic.formatDate
+          return topic
+        })
       })
   },
   // get user's topics
@@ -37,7 +41,24 @@ module.exports = {
   incPv(topicId){
     return Topic.update({ _id: topicId }, { $inc: { pv: 1 } })
   },
-  toggleUps(topicId){
-
+  updateUps(topicId, userId){
+    return Topic.findOne({ _id: topicId }).then(topic => {
+      let index = topic.ups.indexOf(userId)
+      let opts = {}
+      if(index !== -1){
+        opts.$pull = { ups: userId }
+      }else{
+        opts.$push = { ups: userId }
+      }
+      // both update and updateOne don't return modified document
+      // rather than return the command result
+      return Topic.updateOne({ _id: topicId }, opts)
+    })
+  },
+  // get the number of topic's ups
+  getUpsCount(topicId){
+    return Topic.findOne({ _id: topicId }).then(topic => {
+      return topic.ups.length
+    })
   }
 }

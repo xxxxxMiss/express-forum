@@ -4,12 +4,12 @@
  const UserModel = require('../models/user')
 
  // 注册页get  /signup
- router.get('/', (req, res) => {
+ router.get('/signup', (req, res) => {
   res.render('signup')
  })
 
 // 注册post  /signup
- router.post('/', (req, res, next) => {
+ router.post('/signup', (req, res, next) => {
   let { name, password } = req.fields
   // use sha1 encrypt the password
   password = sha1(password)

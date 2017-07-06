@@ -1,4 +1,5 @@
 const Schema = require('mongoose').Schema
+const ObjectId = Schema.Types.ObjectId
 const UtilClass = require('./util')
 
 const commentSma = new Schema({
@@ -6,11 +7,11 @@ const commentSma = new Schema({
     type: String
   },
   author: {
-    type: Schema.Types.ObjectId,
+    type: ObjectId,
     ref: 'User'
   },
   topic: {
-    type: Schema.Types.ObjectId,
+    type: ObjectId,
     ref: 'Topic'
   }
 })

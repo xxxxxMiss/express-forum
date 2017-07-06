@@ -1,12 +1,12 @@
 <%- include('header') %>
-<%- include('components/navbar', { config: { title: '我的发表' }}) %>
-<div data-page="my-topics" class="page">
+<%- include('components/navbar', { config: { title: '我的收藏' }}) %>
+<div data-page="my-collects" class="page">
   <div class="page-content">
     <%- include('components/notification') %>
     <div class="list-block">
       <ul>
         <% topics.forEach(topic => { %>
-          <%- include('components/list-item', { topic, page: 'my-topics'}) %>
+          <%- include('components/list-item', { topic, page: 'my-collects' }) %>
         <% }) %>
       </ul>
     </div>

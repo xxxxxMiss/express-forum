@@ -4,11 +4,11 @@ const sha1 = require('sha1')
 const UserModel = require('../models/user')
 const TopicModel = require('../models/topic')
 
-router.get('/', (req, res) => {
+router.get('/signin', (req, res) => {
   res.render('signin')
 })
 
-router.post('/', (req, res, next) => {
+router.post('/signin', (req, res, next) => {
   let { name, password } = req.fields
 
   if(!name || !password){
@@ -32,8 +32,6 @@ router.post('/', (req, res, next) => {
     TopicModel.getTopicsCount(user._id).then(count => {
       
       delete user.password
-      user = user.toObject()
-      user.topicsCount = count
       req.session.user = user
 
       res.redirect('/topics')

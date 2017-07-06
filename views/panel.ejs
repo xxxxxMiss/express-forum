@@ -39,30 +39,30 @@
             <div class="list-block">
               <ul>
                 <li>
-                  <a href="/user/<% if(user){ %><%= user._id %><% } %>/topics" class="item-link item-content">
+                  <a <% if (user) { -%>href="/user/<%= user._id %>/topics"<% } -%> class="item-link item-content">
                     <div class="item-media">
                       <i class="icon material-icons">insert_drive_file</i>
                     </div>
                     <div class="item-inner">
                       <div class="item-title">我的发表</div>
                       <div class="item-after">
-                        <% if (user && user.topicsCount) { -%>
-                          <span class="badge"><%= user.topicsCount %>个</span>
+                        <% if (user) { -%>
+                          <span class="badge"><%= user.ask_count %>个</span>
                         <% } -%>
                       </div>
                     </div>
                   </a>
                 </li>
                 <li>
-                  <a class="item-link item-content">
+                  <a <% if (user) { -%>href="/user/<%= user._id %>/collects"<% } -%> class="item-link item-content">
                     <div class="item-media">
                       <i class="icon material-icons">star</i>
                     </div>
                     <div class="item-inner">
                       <div class="item-title">我的收藏</div>
                       <div class="item-after">
-                        <% if (user && user.collections) { -%>
-                          <span class="badge"><%= user.collections.length%>个</span>
+                        <% if (user) { -%>
+                          <span class="badge"><%= user.collect_count %>个</span>
                         <% } -%>
                       </div>
                     </div>

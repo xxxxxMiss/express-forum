@@ -17,17 +17,20 @@
   </div>
   <div class="toolbar toolbar-bottom topic-toolbar">
     <div class="toolbar-inner">
+    <div class="button button-fill" id="J_btnTest">
+      测试
+    </div>
       <form class="ups" method="post" action="/topics/<%= topic._id %>/ups">
         <div class="chip">
           <div class="chip-media">
-            <i class="icon material-icons">file_upload</i>
+            <i class="icon material-icons">👍</i>
           </div>
-          <button class="chip-label">0</button>
+          <button class="chip-label"><%= upsCount %></button>
         </div>
       </form>
       <form class="collect" method="post" action="/topics/<%= topic._id %>/collect">
-        <div><i class="icon material-icons">star</i></div>
-        <button>收藏</button>
+        <div><i class="icon material-icons"><% if (isCollected) { -%> star <% } else { -%> star_border <% } -%></i></div>
+        <button><% if (isCollected) { -%> 已收藏 <% } else { -%> 收藏 <% } -%></button>
       </form>
       <a href="/topics/<%= topic._id %>/comments">
         <div><i class="icon material-icons">mode_comment</i></div>

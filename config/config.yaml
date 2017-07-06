@@ -5,3 +5,9 @@ session:
   key: qschforum
   maxAage: 2592000000
 mongodb: mongodb://127.0.0.1:27017/forum
+
+# github login config
+github_oauth:
+  clientID: your GITHUB_CLIENT_ID
+  clientSecret: your GITHUB_CLIENT_SECRET
+  callbackURL: xxxx

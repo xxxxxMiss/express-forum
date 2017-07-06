@@ -4,12 +4,12 @@ const TopicModel = require('../models/topic')
 const UserModel = require('../models/user')
 const checkLogin = require('../middlewares/check').checkLogin
 // get /ask
-router.get('/create', checkLogin, (req, res, next) => {
+router.get('/ask/create', checkLogin, (req, res, next) => {
   res.render('ask', { topic: null })
 })
 
 // post /ask/create
-router.post('/create', (req, res, next) => {
+router.post('/ask/create', (req, res, next) => {
   let { _id, name } = req.session.user
   let { title, content } = req.fields
   let topic = {
@@ -28,19 +28,15 @@ router.post('/create', (req, res, next) => {
 
   TopicModel.create(topic).then(topic => {
     // update user info after successfully create a topic
-    let user = req.session.user
-
-    ;(user.recent_topics || (user.recent_topics = [])).push(topic._id)
-
-    UserModel.updateByName(name, user).then(doc => {
-      res.redirect('/topics')
-    })
+    return UserModel.updateUser(req.session.user._id, 'ask_count', 1)
+  }).then(user => {
+    req.session.user.ask_count += 1
+    res.redirect('/topics')
   })
-
 })
 
 // edit your topic
-router.get('/:topicId/edit', checkLogin, (req, res) => {
+router.get('/ask/:topicId/edit', checkLogin, (req, res) => {
   let { topicId } = req.params
 
   TopicModel.findOneById(topicId).then(topic => {
@@ -48,7 +44,7 @@ router.get('/:topicId/edit', checkLogin, (req, res) => {
   })
 })
 // update you edit
-router.post('/:topicId/edit', (req, res) => {
+router.post('/ask/:topicId/edit', (req, res) => {
   let { topicId } = req.params
   let { title, content } = req.fields
   let topic = { title, content }
