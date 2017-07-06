@@ -1,15 +1,13 @@
-const express = require('express')
-const router = express.Router()
 const TopicModel = require('../models/topic')
 const UserModel = require('../models/user')
 const checkLogin = require('../middlewares/check').checkLogin
 // get /ask
-router.get('/ask/create', checkLogin, (req, res, next) => {
+exports.getAsk = (req, res, next) => {
   res.render('ask', { topic: null })
-})
+}
 
 // post /ask/create
-router.post('/ask/create', (req, res, next) => {
+exports.ask = (req, res, next) => {
   let { _id, name } = req.session.user
   let { title, content } = req.fields
   let topic = {
@@ -33,18 +31,18 @@ router.post('/ask/create', (req, res, next) => {
     req.session.user.ask_count += 1
     res.redirect('/topics')
   })
-})
+}
 
 // edit your topic
-router.get('/ask/:topicId/edit', checkLogin, (req, res) => {
+exports.getEditAsk = (req, res) => {
   let { topicId } = req.params
 
   TopicModel.findOneById(topicId).then(topic => {
     res.render('ask', { topic })
   })
-})
+}
 // update you edit
-router.post('/ask/:topicId/edit', (req, res) => {
+exports.editAsk = (req, res) => {
   let { topicId } = req.params
   let { title, content } = req.fields
   let topic = { title, content }
@@ -55,6 +53,4 @@ router.post('/ask/:topicId/edit', (req, res) => {
       req.flash('success', '编辑成功')
       res.redirect(`/user/${userId}/topics`)
     })
-})
-
-module.exports = router
+}

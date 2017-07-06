@@ -5,7 +5,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const formidable = require('express-formidable')
 const flash = require('connect-flash')
-const router = require('./routes')
+const routes = require('./routes')
 const config = require('./config')
 const pkg = require('./package')
 
@@ -52,7 +52,8 @@ app.locals.cfg = {
   description: pkg.description
 }
 
-router(app)
+// set up router
+app.use('/', routes)
 
 app.listen(config.port)
 

@@ -1,19 +1,16 @@
-const express = require('express')
-const router = express.Router()
-const checkLogin = require('../middlewares/check').checkLogin
 const TopicModel = require('../models/topic')
 const CommentModel = require('../models/comment')
 const TopicCollectModel = require('../models/topic_collect')
 const UserModel = require('../models/user')
 
-router.get('/topics', (req, res) => {
+exports.getTopics = (req, res) => {
   TopicModel.getTopics().then(topics => {
     // caution: typeof topic._id === 'object' is true
     res.render('topics', { topics })
   })
-})
+}
 
-router.get('/topics/:topicId', (req, res) => {
+exports.getTopic = (req, res) => {
   let { topicId } = req.params
   let userId = req.session.user && req.session.user._id || null
 
@@ -33,19 +30,19 @@ router.get('/topics/:topicId', (req, res) => {
       isCollected: result[4] ? true : false
     })
   })
-})
+}
 
-router.get('/topics/:topicId/comments', (req, res) => {
+exports.getComments = (req, res) => {
   let { topicId } = req.params
 
   CommentModel.getCommentsByTopicId(topicId)
     .then(comments => {
       res.render('comments', { comments })
     })
-})
+}
 
 // post a comment
-router.post('/topics/:topicId/comments', checkLogin, (req, res) => {
+exports.postComment = (req, res) => {
   let { topicId } = req.params
       ,{ content } = req.fields
       ,userId = req.session.user._id
@@ -57,9 +54,9 @@ router.post('/topics/:topicId/comments', checkLogin, (req, res) => {
     // TODO optimize CRUD
     res.redirect('back')
   })
-})
+}
 
-router.post('/topics/:topicId/ups', (req, res) => {
+exports.ups = (req, res) => {
   let { topicId } = req.params
   let userId = req.session.user._id
 
@@ -68,9 +65,9 @@ router.post('/topics/:topicId/ups', (req, res) => {
       res.redirect(`/topics/${topicId}`)
     }
   })
-})
+}
 
-router.post('/topics/:topicId/collect', checkLogin, (req, res) => {
+exports.collect = (req, res) => {
   let { topicId } = req.params
   let userId = req.session.user._id
 
@@ -94,6 +91,4 @@ router.post('/topics/:topicId/collect', checkLogin, (req, res) => {
     req.session.user.collect_count = user.collect_count
     res.redirect(`/topics/${topicId}`)
   })
-})
-
-module.exports = router
+}
