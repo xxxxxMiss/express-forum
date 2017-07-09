@@ -23,5 +23,9 @@ module.exports = {
   updateUser(userId, field, value){
     value = value > 0 ? 1 : -1
     return User.updateUser(userId, field, value)
+  },
+
+  getUserByGithubId(github_id){
+    return User.findOne({ github_id })
   }
 }

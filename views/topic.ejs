@@ -13,25 +13,26 @@
           <%- topic.content %>
         </div>
       </div>
+      <div class="card-footer">
+        发布于&nbsp;&nbsp;<span><%= topic.formatDate %></span>
+      </div>
     </div>
   </div>
   <div class="toolbar toolbar-bottom topic-toolbar">
     <div class="toolbar-inner">
-    <div class="button button-fill" id="J_btnTest">
-      测试
-    </div>
-      <form class="ups" method="post" action="/topics/<%= topic._id %>/ups">
+      <div class="ups" id="J_ups">
         <div class="chip">
           <div class="chip-media">
             <i class="icon material-icons">👍</i>
           </div>
-          <button class="chip-label"><%= upsCount %></button>
+          <button class="chip-label" id="J_upsCount"><%= upsCount %></button>
         </div>
-      </form>
-      <form class="collect" method="post" action="/topics/<%= topic._id %>/collect">
-        <div><i class="icon material-icons"><% if (isCollected) { -%> star <% } else { -%> star_border <% } -%></i></div>
-        <button><% if (isCollected) { -%> 已收藏 <% } else { -%> 收藏 <% } -%></button>
-      </form>
+      </div>
+      <div class="collect" id="J_collect">
+        <div><i class="icon material-icons" id="J_collectIcon"><% if (isCollected) { -%> star <% } else { -%> star_border <% } -%></i>
+        </div>
+        <button id="J_collectText"><% if (isCollected) { -%> 已收藏 <% } else { -%> 收藏 <% } -%></button>
+      </div>
       <a href="/topics/<%= topic._id %>/comments">
         <div><i class="icon material-icons">mode_comment</i></div>
         <span><% if (commentsCount) { -%> <%= commentsCount %> <% } else { -%> 评论 <% } -%></span>
@@ -40,3 +41,37 @@
   </div>
 </div>
 <%- include('footer') %>
+<script>
+;(function(){
+    var collectText = $('#J_collectText')
+    var collectIcon = $('#J_collectIcon')
+    $(document).on('click', '#J_collect', function(){
+      $.post('/topics/<%= topic._id %>/collect', {}, function(res){
+        res = JSON.parse(res)
+        if(res.err_no == 0){
+          if(res.data.isCollected){
+            collectText.text('已收藏')
+            collectIcon.text('star')
+          }else{
+            collectText.text('收藏')
+            collectIcon.text('star_border')
+          }
+        }
+      })
+    })
+})()
+
+;(function(){
+  var upsCount = $('#J_upsCount')
+  $(document).on('click', '#J_ups', function(){
+    $.post('/topics/<%= topic._id %>/ups', {}, function(res){
+      res = JSON.parse(res)
+      if(res.err_no == 0){
+        upsCount.text(res.data.upsCount)
+      }
+    })
+  })
+})()
+</script>
+</body>
+</html>

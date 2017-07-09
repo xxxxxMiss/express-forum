@@ -4,6 +4,48 @@
   height: 40px;
   border-radius: 50%;
 }
+
+.other-signin{
+  margin-top: 30px;
+}
+.signin-divider{
+  position: relative;
+  text-align: center;
+}
+.signin-divider .divider-left,
+.signin-divider .divider-right{
+  position: absolute;
+  top: 50%;
+  margin-top: -0.5px;
+  width: 30%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, .4);
+}
+.signin-divider .divider-left{
+  left: 16px;
+}
+.signin-divider .divider-right{
+  right: 16px;
+}
+.signin-divider .divider-text{
+  font-size: 12px;
+}
+.other-signin .ways-signin{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ways-signin li{
+  flex: 1;
+  text-align: center;
+  font-size: 14px;
+}
+.ways-signin li .icon{
+  font-size: 30px;
+}
+
+
 /*the prefix of a class named by the attribute of the data-page */
 .sign-card .card-header{
   display: block;
@@ -122,6 +164,10 @@
 .topic-item .card-header{
   justify-content: flex-start;
 }
+.topic-item .card-footer{
+  justify-content: flex-end;
+  font-size: 14px;
+}
 .topic-item.card{
   box-shadow: none;
 }
@@ -157,8 +203,6 @@
 }
 
 
-
-
 .toolbar.comments-toolbar{
   min-height: 48px;
   height: auto;
@@ -180,4 +224,8 @@
 .comments-list .item-subtitle{
   overflow-y: auto;
   white-space: normal;
+  padding: 10px 0;
+}
+.comments-list .item-text{
+  text-align: right;
 }

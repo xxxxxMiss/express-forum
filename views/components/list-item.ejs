@@ -21,16 +21,14 @@
           <% if (topic.ups.length) { -%>
             <span><%= topic.ups.length %>&nbsp;赞</span>
           <% } -%>
-          <span><%= topic.formatDate %></span>
+          <span><%= topic.createAgo %></span>
         </div>
       </a>
       <!-- since topic.author._id's type is object, we should convert it to string then compare them -->
       <% if (page === 'topics' || page === 'my-topics') { -%>
         <% if (user && String(user._id) === String(topic.author._id)) { -%>
           <div class="buttons-row topics-buttons">
-            <form method="post" action="/user/<%= user._id %>/topics/<%= topic._id %>/del">
-              <button class="button color-blue ripple-pink">删除</button>
-            </form>
+            <button data-id="<%= topic._id %>" class="button color-blue ripple-pink J_btn">删除</button>
             <a href="/ask/<%= topic._id %>/edit" class="button color-blue ripple-bule">编辑</a>
           </div>
         <% } -%>

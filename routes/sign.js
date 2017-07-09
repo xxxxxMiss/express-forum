@@ -1,5 +1,7 @@
  const sha1 = require('sha1')
  const UserModel = require('../models/user')
+ const TopicModel = require('../models/topic')
+ const config = require('../config')
 
  // 注册页get  /signup
  exports.getSignup = (req, res) => {
@@ -71,3 +73,16 @@
    req.session.user = null
    res.redirect('/topics')
  }
+
+// oauth2.0
+exports.github = (req, res) => {
+  let dataStr = (new Date()).valueOf()
+  //重定向到认证接口,并配置参数
+  //注意这里使用的是node的https模块发起的请求
+  let path = "https://github.com/login/oauth/authorize"
+  path += '?client_id=' + config.github_oauth.clientID
+  // path += '&scope='+OAuthConfig.GITHUB_CLIENT_SCOPE
+  path += '&state='+ dataStr
+  //转发到授权服务器
+  res.redirect(path)
+}

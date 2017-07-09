@@ -15,3 +15,25 @@
   <%- include('components/quickly-enter') %>
 </div>
 <%- include('footer') %>
+<% if (user) { -%>
+  <script>
+  ;(function(){
+    $(document).on('click', '.J_btn', function(){
+      var self = $(this)
+      var topicId = self.data('id')
+      app.confirm('您确定要删除吗？', function(){
+        $.post(`/user/<%= user._id %>/topics/${topicId}/del`, {}, function(res){
+            res = JSON.parse(res)
+            if(res.err_no == 0){
+              app.alert('删除成功', function(){
+                self.closest('li').remove()
+              })
+            }
+        })
+      })
+    })
+  })()
+  </script>
+<% } -%>
+</body>
+</html>

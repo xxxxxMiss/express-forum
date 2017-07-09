@@ -8,6 +8,7 @@ mongodb: mongodb://127.0.0.1:27017/forum
 
 # github login config
 github_oauth:
-  clientID: your GITHUB_CLIENT_ID
-  clientSecret: your GITHUB_CLIENT_SECRET
-  callbackURL: xxxx
+  clientID: 7212a5f9c55ee738835e
+  clientSecret: ef3f7f4f5dfc506ea3aa2da2b40b6db5071ab78a
+  callbackURL: http://127.0.0.1:3000/auth/github/callback
+  passReqToCallback: true

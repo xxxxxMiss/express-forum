@@ -4,7 +4,7 @@ const TopicCollectModel = require('../models/topic_collect')
 const UserModel = require('../models/user')
 
 exports.getTopics = (req, res) => {
-  TopicModel.getTopics().then(topics => {
+  TopicModel.getTopicList().then(topics => {
     // caution: typeof topic._id === 'object' is true
     res.render('topics', { topics })
   })
@@ -17,14 +17,14 @@ exports.getTopic = (req, res) => {
   // enter a topic detail page,
   // you must do five things at the same time
   Promise.all([
-    TopicModel.getTopics(topicId),
+    TopicModel.getTopicById(topicId),
     TopicModel.incPv(topicId),
     CommentModel.getCommentsCount(topicId),
     TopicModel.getUpsCount(topicId),
     TopicCollectModel.getTopicCollectByUserId(userId, topicId)
   ]).then(result => {
     res.render('topic', { 
-      topic: result[0][0], 
+      topic: result[0], 
       commentsCount: result[2], 
       upsCount: result[3],
       isCollected: result[4] ? true : false
@@ -60,10 +60,12 @@ exports.ups = (req, res) => {
   let { topicId } = req.params
   let userId = req.session.user._id
 
-  TopicModel.updateUps(topicId, userId).then(commandRet => {
-    if(commandRet.ok && commandRet.n > 0){
-      res.redirect(`/topics/${topicId}`)
-    }
+  TopicModel.updateUps(topicId, userId).then(doc => {
+    res.send({
+      err_no: 0,
+      err_msg: '',
+      data: { isUped: doc.ups.indexOf(userId) !== -1, upsCount: doc.ups.length }
+    })
   })
 }
 
@@ -81,14 +83,22 @@ exports.collect = (req, res) => {
     }
   }).then(ret => {
     // TODO update user's collect count
+    let isCollected = false
     if(ret.result && ret.result.ok && ret.result.n > 0){
-      return UserModel.updateUser(userId, 'collect_count', -1)
+      // return UserModel.updateUser(userId, 'collect_count', -1)
+      isCollected = false
     }
     if(ret._id){
-      return UserModel.updateUser(userId, 'collect_count', 1)
+      // return UserModel.updateUser(userId, 'collect_count', 1)
+      isCollected = true
     }
-  }).then(user => {
-    req.session.user.collect_count = user.collect_count
-    res.redirect(`/topics/${topicId}`)
+
+    res.send({
+      err_no: 0,
+      err_msg: '',
+      data: { 
+        isCollected: isCollected
+      }
+    })
   })
 }

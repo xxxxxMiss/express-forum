@@ -3,6 +3,9 @@ const path = require('path')
 const express = require('express')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
+const passport = require('passport')
+const GitHubStrategy = require('passport-github2').Strategy
+const githubStrategyMiddleware = require('./middlewares/github_strategy')
 const formidable = require('express-formidable')
 const flash = require('connect-flash')
 const routes = require('./routes')
@@ -28,6 +31,22 @@ app.use(session({
     url: config.mongodb
   })
 }))
+
+// ====== oauth =====
+// first step
+passport.serializeUser((user, done) => {
+  done(null, user)
+})
+passport.deserializeUser((user, done) => {
+  done(null, user)
+})
+// second step
+passport.use(new GitHubStrategy(config.github_oauth, githubStrategyMiddleware))
+// third step
+app.use(passport.initialize())
+app.use(passport.session())
+// fourth step: config route
+
 
 // flash() requires session, 
 // so you must mounted session middleware before flash

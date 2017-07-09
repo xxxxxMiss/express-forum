@@ -37,12 +37,15 @@ exports.delTopic = (req, res) => {
 
   TopicModel.remove(topicId).then(commandRet => {
     if(commandRet.result.ok && commandRet.result.n > 0){
-      req.flash('success', '删除成功')
       return UserModel.updateUser(userId, 'ask_count', -1)
     }
   }).then(user => {
     req.session.user.ask_count = user.ask_count
-    res.redirect(`/user/${userId}/topics`)
+    res.send({
+      err_no: 0,
+      err_msg: '',
+      data: {}
+    })
   })
 }
 

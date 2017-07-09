@@ -9,21 +9,14 @@ module.exports = {
   findOneAndUpdate(id, topic){
     return Topic.findOneAndUpdate({ _id: id }, topic, { new: true })
   },
-  // get topic list or topic detail
-  getTopics(topicId){
-    let query = {}
-    topicId && (query._id = topicId)
-
-    return Topic.find(query)
+  getTopicList(){
+    return Topic.find()
       .populate({ path: 'author', select: 'name avatar _id'})
       .sort({ create_at: -1 })
-      .then(topics => {
-        topics = Array.isArray(topics) ? topics : [topics]
-        return topics.map(topic => {
-          topic.create_at = topic.formatDate
-          return topic
-        })
-      })
+  },
+  getTopicById(topicId){
+    return Topic.findOne({ _id: topicId })
+      .populate({ path: 'author' })
   },
   // get user's topics
   findAllByUserId(userId){
@@ -52,7 +45,9 @@ module.exports = {
       }
       // both update and updateOne don't return modified document
       // rather than return the command result
-      return Topic.updateOne({ _id: topicId }, opts)
+      // if you want to get a document instance,
+      // you can use findOneAndUpdate method
+      return Topic.findOneAndUpdate({ _id: topicId }, opts, { new: true })
     })
   },
   // get the number of topic's ups

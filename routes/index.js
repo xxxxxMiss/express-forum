@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('passport')
 const checkLogin = require('../middlewares/check').checkLogin
 const user = require('./user')
 const ask = require('./ask')
 const sign = require('./sign')
 const topics = require('./topics')
+const github = require('./github')
 
 router.get('/ask/create', checkLogin, ask.getAsk)
 router.post('/ask/create', ask.ask)
@@ -13,10 +15,20 @@ router.post('/ask/:topicId/edit', ask.editAsk)
 
 router.get('/signin', sign.getSignin)
 router.post('/signin', sign.signin)
-router.post('/signout', sign.signout)
+router.get('/signout', sign.signout)
 router.get('/signup', sign.getSignup)
 router.post('/signup', sign.signup)
 
+// oauth2.0 
+// router.get('/github', sign.github)
+
+// passport github oauth
+router.get('/auth/github', passport.authenticate('github'))
+router.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/signin' }), 
+  github.githubCallback)
+
+router.get('/', topics.getTopics)
 router.get('/topics', topics.getTopics)
 router.get('/topics/:topicId', topics.getTopic)
 router.get('/topics/:topicId/comments', topics.getComments)

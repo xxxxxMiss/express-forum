@@ -43,20 +43,22 @@
         <div class="signin-divider">
           <div class="divider-left"></div>
           <div class="divider-text">其他账号登录</div>
-          <div class="divider-left"></div>
+          <div class="divider-right"></div>
         </div>
-        <ul>
+        <ul class="ways-signin">
           <li>
-            <i class="icon icon-weibo"></i>
+            <i class="icon iconfont icon-weibo"></i>
             <div>微博</div>
           </li>
           <li>
-            <i class="icon icon-wechat"></i>
+            <i class="icon iconfont icon-wechat"></i>
             <div>微信</div>
           </li>
           <li>
-            <i class="icon icon-github"></i>
-            <div>Github</div>
+            <a href="/auth/github">
+              <i class="icon iconfont icon-github"></i>
+              <div>Github</div>
+            </a>
           </li>
         </ul>
       </div>
@@ -64,3 +66,5 @@
   </div>
 </div>
 <%- include('footer') %>
+</body>
+</html>

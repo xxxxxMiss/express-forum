@@ -34,8 +34,19 @@
 - [express](http://www.expressjs.com.cn/4x/api.html)
 
 
---- optimize
-- 部分请求使用ajax（不刷新页面，页面可以做得更加炫酷）
+--- 
+## optimize
+- 部分请求使用ajax（不刷新页面，页面可以做得更加炫酷）,统一数据返回格式
+```
+{
+    err_no: 0, // 错误码和错误信息可做相应的配置，除了0以外都表示非成功的请求。
+    err_msg: ''
+    data: {
+        list: []
+        repo: 'https://github.com/xxxxxMiss'
+    }
+}
+```
 
 
 ---

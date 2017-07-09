@@ -3,33 +3,11 @@
 var app = new Framework7({
     router: false,
     material: true,
+    modalTitle: '温馨提示',
+    modalButtonOk: '确定',
+    modalButtonCancel: '取消'
 })
 var $ = Dom7
-
-function getModalTemplate(){
-  return {
-    confirm: `<div class="modal {{#unless buttons}}modal-no-buttons{{/unless}}">
-      <div class="modal-inner">
-        {{#if title}}
-          <div class="modal-title">{{title}}</div>
-        {{/if}}
-        {{#if text}}
-           <div class="modal-text">{{text}}</div>
-        {{/if}}
-        {{#if afterText}}
-          {{afterText}}
-        {{/if}}
-      </div>
-      {{#if buttons}}
-        <div class="modal-buttons">
-          {{#each buttons}}
-            <button class="modal-button {{#if bold}}modal-button-bold{{/if}}">{{text}}</button>
-          {{/each}}
-        </div>
-      {{/if}}
-    </div> `
-  }
-}
 
 // user page
 ;(function(page){
