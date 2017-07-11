@@ -32,6 +32,8 @@
 - [mongoose](http://mongoosejs.com/docs/api.html)
 - [mongodb](https://docs.mongodb.com/manual/reference/operator/query/all/)
 - [express](http://www.expressjs.com.cn/4x/api.html)
+- [nodemailer](https://nodemailer.com)
+- [passportjs](http://passportjs.org/)
 
 
 --- 

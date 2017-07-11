@@ -2,6 +2,7 @@
  const UserModel = require('../models/user')
  const TopicModel = require('../models/topic')
  const config = require('../config')
+ const mail = require('../common/mail')
 
  // 注册页get  /signup
  exports.getSignup = (req, res) => {
@@ -72,6 +73,27 @@
  exports.signout = (req, res) => {
    req.session.user = null
    res.redirect('/topics')
+ }
+
+ // obtain email code
+ exports.doVcode = (req, res) => {
+  let { email } = req.fields
+
+  if(!email){
+    req.flash('error', '请填写邮箱')
+    return res.redirect('/')
+  }
+
+  const rs = String(Math.random()).replace('.', '')
+  const vcode = rs[1] + rs[3] + rs[5] + rs[8]
+
+  mail.sendVcodeMail(email, vcode, function(){
+    res.send({
+      err_no: 0,
+      err_msg: '',
+      data: { vcode }
+    })
+  })
  }
 
 // oauth2.0

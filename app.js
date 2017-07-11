@@ -6,6 +6,8 @@ const MongoStore = require('connect-mongo')(session)
 const passport = require('passport')
 const GitHubStrategy = require('passport-github2').Strategy
 const githubStrategyMiddleware = require('./middlewares/github_strategy')
+const WeiboStrategy = require('passport-weibo').Strategy
+const weiboStrategyMiddleware = require('./middlewares/weibo_strategy')
 const formidable = require('express-formidable')
 const flash = require('connect-flash')
 const routes = require('./routes')
@@ -42,6 +44,7 @@ passport.deserializeUser((user, done) => {
 })
 // second step
 passport.use(new GitHubStrategy(config.github_oauth, githubStrategyMiddleware))
+passport.use(new WeiboStrategy(config.weibo_oauth, weiboStrategyMiddleware))
 // third step
 app.use(passport.initialize())
 app.use(passport.session())

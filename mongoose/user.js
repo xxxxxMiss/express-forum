@@ -3,13 +3,9 @@ const ObjectId = Schema.Types.ObjectId
 const UtilClass = require('./util')
 
 const userSma = new Schema({
-  name: {
-    type: String,
-    unique: true
-  },
-  password: {
-    type: String
-  },
+  name: { type: String, unique: true },
+  password: { type: String },
+  email: { type: String, unique: true },
   create_at: { type: Date, default: Date.now },
   gender: String,
   position: String,

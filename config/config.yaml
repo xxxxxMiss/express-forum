@@ -1,4 +1,6 @@
 # you can add comments in yaml file, so using yaml instead of json
+app_name_en: express_forum
+app_name_cn: 青灰论坛
 port: 3000
 session:
   secret: qschforum
@@ -12,3 +14,19 @@ github_oauth:
   clientSecret: ef3f7f4f5dfc506ea3aa2da2b40b6db5071ab78a
   callbackURL: http://127.0.0.1:3000/auth/github/callback
   passReqToCallback: true
+
+weibo_oauth:
+  # App Key
+  clientID: 2821978811
+  # App Secret
+  clientSecret: 42d86dc209da12cb2c981d7268f1d4e6
+  callbackURL: http://127.0.0.1:3000/auth/weibo/callback
+
+# config mail
+mail_opts:
+  host: smtp.qq.com
+  port: 465
+  auth:
+    secure: true
+    user: 794465731@qq.com
+    pass: zmuxzvvhdotvbcch

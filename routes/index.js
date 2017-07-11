@@ -7,6 +7,8 @@ const ask = require('./ask')
 const sign = require('./sign')
 const topics = require('./topics')
 const github = require('./github')
+const weibo = require('./weibo')
+
 
 router.get('/ask/create', checkLogin, ask.getAsk)
 router.post('/ask/create', ask.ask)
@@ -18,6 +20,7 @@ router.post('/signin', sign.signin)
 router.get('/signout', sign.signout)
 router.get('/signup', sign.getSignup)
 router.post('/signup', sign.signup)
+router.post('/do_vcode', sign.doVcode)
 
 // oauth2.0 
 // router.get('/github', sign.github)
@@ -27,6 +30,11 @@ router.get('/auth/github', passport.authenticate('github'))
 router.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/signin' }), 
   github.githubCallback)
+// passport weibo oauth
+router.get('/auth/weibo', passport.authenticate('weibo'))
+router.get('/auth/weibo/callback', 
+  passport.authenticate('weibo', { failureRedirect: '/signin' }),
+  weibo.weiboCallback)
 
 router.get('/', topics.getTopics)
 router.get('/topics', topics.getTopics)

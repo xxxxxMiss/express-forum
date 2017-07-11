@@ -27,5 +27,9 @@ module.exports = {
 
   getUserByGithubId(github_id){
     return User.findOne({ github_id })
+  },
+
+  getUserByEmail(email){
+    return User.findOne({ email })
   }
 }

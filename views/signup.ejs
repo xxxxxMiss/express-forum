@@ -3,43 +3,112 @@
 <div data-page="signup" class="page">
   <div class="page-content">
     <div class="content-block">
+      <div class="tabbar">
+        <a href="#tab-name" class="tab-link active">用户名注册</a>
+        <a href="#tab-email" class="tab-link">邮箱注册</a>
+      </div>
       <%- include('components/notification') %>
-      <form class="list-block inputs-list" method="post">
-        <ul>
-          <li>
-            <div class="item-content">
-              <div class="item-media">
-                <i class="icon material-icons">person_outline</i>
-              </div>
-              <div class="item-inner">
-                <div class="item-title floating-label">用户名</div>
-                <div class="item-input item-input-field">
-                  <input type="text" name="name" placeholder="请输入用户名">
+      <div class="tabs">
+        <form id="tab-name" class="list-block inputs-list tab active" 
+          method="post" action="/signup?ways=username">
+          <ul>
+            <li>
+              <div class="item-content">
+                <div class="item-media">
+                  <i class="icon material-icons">person_outline</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title floating-label">用户名</div>
+                  <div class="item-input item-input-field">
+                    <input type="text" name="name">
+                  </div>
                 </div>
               </div>
-            </div>
-          </li>
-          <li>
-            <div class="item-content">
-              <div class="item-media">
-                <i class="icon material-icons">lock_outline</i>
-              </div>
-              <div class="item-inner">
-                <div class="item-title floating-label">密码</div>
-                <div class="item-input item-input-field">
-                  <input type="password" name="password" placeholder="请输入密码">
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-media">
+                  <i class="icon material-icons">lock_outline</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title floating-label">密码</div>
+                  <div class="item-input item-input-field">
+                    <input type="password" name="password" placeholder="请输入密码">
+                  </div>
                 </div>
               </div>
-            </div>
-          </li>
-        </ul>
-        <div class="content-block">
-          <input type="submit" class="button button-fill button-raised" value="注册">
-        </div>
-      </form>
+            </li>
+          </ul>
+          <div class="content-block">
+            <input type="submit" class="button button-fill button-raised" value="注册">
+          </div>
+        </form>
+        <form id="tab-email" class="list-block inputs-list tab" 
+          method="post" action="/signup?ways=email">
+          <ul>
+            <li>
+              <div class="item-content">
+                <div class="item-media">
+                  <i class="icon material-icons">email</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title floating-label">邮箱</div>
+                  <div class="item-input">
+                    <input id="J_email" type="text" name="email">
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-media">
+                  <i class="icon material-icons">filter_4</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title floating-label">邮箱验证码</div>
+                  <div class="item-input">
+                    <input type="text" name="vcode">
+                    <button id="J_getVcode" type="button" class="button button-fill btn-vcode">获取验证码</button>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-media">
+                  <i class="icon material-icons">lock_outline</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title floating-label">密码</div>
+                  <div class="item-input item-input-field">
+                    <input type="password" name="password" placeholder="请输入密码">
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div class="content-block">
+            <input type="submit" class="button button-fill button-raised" value="注册">
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
 <%- include('footer') %>
+<script>
+  ;((function(){
+    $(document).on('click', '#J_getVcode', function(){
+
+      $.post('/do_vcode', { email: $('#J_email').val() }, function(res){
+        res = JSON.parse(res)
+        if(res.err_no == 0){
+          console.log(res.data.vcode)
+        }
+      })
+    })
+
+  })())
+</script>
 </body>
 </html>
