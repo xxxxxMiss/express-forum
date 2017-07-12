@@ -11,11 +11,32 @@
 
 // 注册post  /signup
  exports.signup = (req, res, next) => {
-  let { name, password } = req.fields
+  const { ways } = req.query
+
+  if(ways === 'username'){
+    var { name, password } = req.fields
+
+    if(!name.trim()){
+      req.flash('error', '用户名不能为空')
+      return res.redirect('/signup?ways=username')
+    }
+  }
+
+  if(ways === 'email'){
+    var { email, vcode, password } = req.fields
+    let sendCode = global.vcode
+
+    if(sendCode !== vcode){
+      req.flash('error', '验证码错误')
+      return res.redirect('/signup?ways=email')
+    }
+  }
   // use sha1 encrypt the password
   password = sha1(password)
 
-  let user = { name, password }
+  let user = ways === 'email' ? 
+    { password, email } : { password, name }
+
   UserModel.create(user).then(user => {
     // write user to session except password field
     delete user.password
@@ -24,7 +45,8 @@
     res.redirect('/topics')
   }).catch(e => {
      if(e.message.match('E11000 duplicate key')){
-      req.flash('error', '该用户名已被占用')
+      let msg = ways === 'email' ? '邮箱' : '用户名'
+      req.flash('error', `该${msg}已被占用`)
       return res.redirect('/signup')
      }
      // caution: to deliver the error up to next middleware
@@ -79,22 +101,24 @@
  exports.doVcode = (req, res) => {
   let { email } = req.fields
 
-  if(!email){
-    req.flash('error', '请填写邮箱')
-    return res.redirect('/')
-  }
-
   const rs = String(Math.random()).replace('.', '')
   const vcode = rs[1] + rs[3] + rs[5] + rs[8]
-
-  mail.sendVcodeMail(email, vcode, function(){
+  const callback = function(){
     res.send({
       err_no: 0,
       err_msg: '',
       data: { vcode }
     })
-  })
+    global.vcode = vcode
+  }
+
+  if(config.debug){
+    callback()
+  }else{
+    mail.sendVcodeMail(email, vcode, callback)
+  }
  }
+
 
 // oauth2.0
 exports.github = (req, res) => {

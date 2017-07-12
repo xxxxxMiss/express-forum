@@ -97,8 +97,28 @@
 </div>
 <%- include('footer') %>
 <script>
+  var ways = $.parseUrlQuery(location.search).ways
+    , tabLinks = $('.tab-link')
+    , forms = $('.tabs form')
+
+  if(ways === 'username'){
+    tabLinks.removeClass('active')
+    forms.removeClass('active')
+    $(tabLinks[0]).addClass('active')
+    $(forms[0]).addClass('active')
+  }
+
+  if(ways === 'email'){
+    tabLinks.removeClass('active')
+    forms.removeClass('active')
+    $(tabLinks[1]).addClass('active')
+    $(forms[1]).addClass('active')
+  }
+
   ;((function(){
     $(document).on('click', '#J_getVcode', function(){
+      var email = $('#J_email').val()
+      if(!email) return app.alert('邮箱不能为空')
 
       $.post('/do_vcode', { email: $('#J_email').val() }, function(res){
         res = JSON.parse(res)

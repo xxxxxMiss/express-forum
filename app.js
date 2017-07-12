@@ -57,18 +57,18 @@ app.use(flash())
 
 // mounted form middleware
 app.use(formidable({
-  uploadDir: path.join(__dirname, 'public/upload'),
+  uploadDir: path.join(__dirname, config.upload.path),
   keepExtensions: true
 }))
 
+// root router locals
 app.use((req, res, next) => {
   res.locals.user = req.session.user
   res.locals.success = req.flash('success')
   res.locals.error = req.flash('error')
-  // caution
   next()
 })
-
+// global locals
 app.locals.cfg = {
   title: pkg.name,
   description: pkg.description

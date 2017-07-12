@@ -7,7 +7,7 @@ const userSma = new Schema({
   password: { type: String },
   email: { type: String, unique: true },
   create_at: { type: Date, default: Date.now },
-  gender: String,
+  gender: { type: String, default: 'M' },
   position: String,
   company: String,
   profile: String,

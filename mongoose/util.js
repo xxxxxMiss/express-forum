@@ -3,14 +3,14 @@ const moment = require('moment')
 
 class UtilClass{
   // instance method(methods)
-  addCreateAt(){
-    // caution: the object returned by mongoose is document object,
-    // you cannot change it, if you want to do so, 
-    // you must call toObject method to convert the document object to plain js object
-    let jsObj = this.toObject()
-    jsObj.createAt = moment(objectIdToTimestamp(jsObj._id)).format('YYYY-MM-DD HH:mm')
-    return jsObj
-  }
+  // addCreateAt(){
+  //   // caution: the object returned by mongoose is document object,
+  //   // you cannot change it, if you want to do so, 
+  //   // you must call toObject method to convert the document object to plain js object
+  //   let jsObj = this.toObject()
+  //   jsObj.createAt = moment(objectIdToTimestamp(jsObj._id)).format('YYYY-MM-DD HH:mm')
+  //   return jsObj
+  // }
 
   get createAgo(){
     let timestamp = moment(this.create_at).unix()
