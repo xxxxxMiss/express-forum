@@ -1,4 +1,4 @@
-# you can add comments in yaml file, so using yaml instead of json
+# you can add comments in yaml, but not permitted in json
 debug: true
 app_name_en: express_forum
 app_name_cn: 青灰论坛

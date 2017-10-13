@@ -5,6 +5,9 @@
 ## 添加评论
 ## 话题列表,详情
 ## 为话题点赞消赞
+## 头像的上传(普通上传和七牛上传)
+## 增加分享功能
+
 ---
 ## 邮箱注册
 ## 第三方登录（github,weibo,weixin）
@@ -18,22 +21,30 @@
 ## 嵌入知乎日报功能
 
 ---
+## 开发环境和正式环境的切换配置
+## 增加日志功能
 ## rest api
 ## 使用前端渲染（全部采用ajax）
 ## 前端使用框架（Vue, React | Framework7, iview等)
 ## 加入聊天功能（多人聊天室）
 ## 语音功能（对于大段的文字，可以直接输入语音）
+## 使用handlebars模板引擎替换ejs模板引擎
+## 使用mysql提供代替mongoose进行纯ajax的查询
 
 
 
-你将：
+你将了解到以下技术的使用：
 - [material icons](https://material.io/icons/)
-- [frmaework7 material design](http://material.framework7.cn/)
+- [framework7 material design](http://material.framework7.cn/)
+- [framework7](http://framework7.io/docs/dom.html)
 - [mongoose](http://mongoosejs.com/docs/api.html)
 - [mongodb](https://docs.mongodb.com/manual/reference/operator/query/all/)
 - [express](http://www.expressjs.com.cn/4x/api.html)
 - [nodemailer](https://nodemailer.com)
 - [passportjs](http://passportjs.org/)
+- [alibaba iconfont](http://www.iconfont.cn/)
+- [heroku](https://dashboard.heroku.com/)
+- [log4js](https://nomiddlename.github.io/log4js-node/api.html)
 
 
 --- 
